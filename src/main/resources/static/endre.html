@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>Bestilling av kinobilletter</title>
+    <script src="endre.js"></script>
+</head>
+<body>
+<h1 class = "container text-center my-5">Bestilling av kinobilletter</h1>
+<div class = "container-fluid row">
+    <form class = "container text-light bg-dark col-3 mx-5 p-3 rounded" id="ticketForm">
+        <input type="text" id="id" hidden/>
+        <label for="movie">Velg film:</label><br>
+        <select class="form-control" id="movie" name="movie">
+            <option value="Ocean’s Eleven">Ocean’s Eleven</option>
+            <option value="Ocean’s Twelve">Ocean’s Twelve</option>
+            <option value="Ocean’s Thirteen">Ocean’s Thirteen</option>
+            <!-- Dropdownmeny med filmer -->
+        </select><br>
+
+        <label for="numTickets">Antall billetter:</label><br>
+        <input class="form-control" type="number" id="numTickets" name="numTickets"><br>
+
+        <label for="firstName">Fornavn:</label><br>
+        <input class="form-control" type="text" id="firstName" name="firstName"><br>
+
+        <label for="lastName">Etternavn:</label><br>
+        <input class="form-control" type="text" id="lastName" name="lastName"><br>
+
+        <label for="phoneNumber">Telefonnummer:</label><br>
+        <input class="form-control" type="tel" id="phoneNumber" name="phoneNumber"><br>
+
+        <label for="email">E-post:</label><br>
+        <input class="form-control" type="email" id="email" name="email"><br><br>
+
+        <button class="btn btn-info" type="button" onclick="endreBestilling()">Endre</button><br>
+    </form>
+</div>
+</body>
+</html>
