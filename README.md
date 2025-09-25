@@ -1,42 +1,42 @@
 # MovieTickets
 
-En kinobillett-app laget med Spring Boot. Du kan bestille billetter til forskjellige filmer, se alle bestillinger og slette dem.
+A movie ticket booking app built with Spring Boot. You can book tickets for different movies, view all bookings and delete them.
 
-## Teknologi
+## Technology
 
 - **Backend**: Spring Boot, Java, H2 Database
 - **Frontend**: HTML, CSS, JavaScript, jQuery, Bootstrap
 
-## Hvordan kjøre appen
+## How to run the app
 
-1. Klon repositoriet:
+1. Clone the repository:
 ```bash
 git clone https://github.com/olavhjemsaeter/MovieTickets.git
 cd MovieTickets
 ```
 
-2. Start appen:
+2. Start the app:
 ```bash
 ./mvnw spring-boot:run
 ```
 
-3. Åpne nettleseren og gå til `http://localhost:8080`
+3. Open your browser and go to `http://localhost:8080`
 
-## Funksjonalitet
+## Features
 
-- Bestille kinobilletter
-- Se alle bestillinger i en tabell
-- Redigere eksisterende bestillinger
-- Slette bestillinger
-- Validering av skjemaer
+- Book movie tickets
+- View all bookings in a table
+- Edit existing bookings
+- Delete bookings
+- Form validation
 
-## Filmer
+## Movies
 
-Du kan velge mellom:
+You can choose between:
 - Ocean's Eleven
 - Ocean's Twelve  
 - Ocean's Thirteen
 
 ## Database
 
-Appen bruker H2 in-memory database. Alle data forsvinner når du stopper appen.
+The app uses H2 in-memory database. All data disappears when you stop the app.
