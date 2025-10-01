@@ -39,27 +39,36 @@ function regBestilling() {
     submitBtn.html('<i class="fas fa-spinner fa-spin me-2"></i>Registrerer...');
     submitBtn.prop('disabled', true);
 
-    $.post("/lagre", bestilling, function(){
-        hentAlle();
-        clearForm();
-        showAlert("Bestilling registrert!", "success");
-        
-        // Reset button
-        submitBtn.html(originalText);
-        submitBtn.prop('disabled', false);
-    }).fail(function() {
-        showAlert("Feil ved registrering av bestilling!", "danger");
-        
-        // Reset button
-        submitBtn.html(originalText);
-        submitBtn.prop('disabled', false);
+    $.ajax({
+        url: "/api/lagre",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(bestilling),
+        success: function(){
+            hentAlle();
+            clearForm();
+            showAlert("Bestilling registrert!", "success");
+            
+            // Reset button
+            submitBtn.html(originalText);
+            submitBtn.prop('disabled', false);
+        },
+        error: function() {
+            showAlert("Feil ved registrering av bestilling!", "danger");
+            
+            // Reset button
+            submitBtn.html(originalText);
+            submitBtn.prop('disabled', false);
+        }
     });
 }
 
 function hentAlle(){
-    $.get("/hentAlle", function ( bestillinger ) {
+    $.get("/api/hentAlle", function ( bestillinger ) {
         formaterData(bestillinger);
         updateStats(bestillinger);
+    }).fail(function() {
+        showAlert("Feil ved henting av bestillinger!", "danger");
     });
 }
 
@@ -173,23 +182,32 @@ function idTilEndring(id){
 
 function slettEnBestilling(id) {
     if (confirm("Er du sikker på at du vil slette denne bestillingen?")) {
-        const url = "/slettEnBestilling?id="+id;
-        $.get( url, function() {
-            showAlert("Bestilling slettet!", "success");
-            hentAlle();
-        }).fail(function() {
-            showAlert("Feil ved sletting av bestilling!", "danger");
+        $.ajax({
+            url: "/api/slettEnBestilling?id="+id,
+            type: "DELETE",
+            success: function() {
+                showAlert("Bestilling slettet!", "success");
+                hentAlle();
+            },
+            error: function() {
+                showAlert("Feil ved sletting av bestilling!", "danger");
+            }
         });
     }
 }
 
 function slettBestillingene() {
     if (confirm("Er du sikker på at du vil slette ALLE bestillingene? Denne handlingen kan ikke angres!")) {
-        $.get( "/slettAlle", function( data ) {
-            showAlert("Alle bestillinger er slettet!", "success");
-            hentAlle();
-        }).fail(function() {
-            showAlert("Feil ved sletting av alle bestillinger!", "danger");
+        $.ajax({
+            url: "/api/slettAlle",
+            type: "DELETE",
+            success: function( data ) {
+                showAlert("Alle bestillinger er slettet!", "success");
+                hentAlle();
+            },
+            error: function() {
+                showAlert("Feil ved sletting av alle bestillinger!", "danger");
+            }
         });
     }
 }

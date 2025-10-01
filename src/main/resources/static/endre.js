@@ -4,7 +4,7 @@ $(function(){  // kjøres når dokumentet er ferdig lastet
 
 function henteEnBestilling(){
     const id = window.location.search.substring(1); // kommer fra kallet i index.js
-    const url = "/henteEnBestilling?id="+id;
+    const url = "/api/henteEnBestilling?id="+id;
     $.get( url, function(enBillett) {
         // overfør til input-feltene i skjemaet
         $("#id").val(enBillett.id); // må ha med denne for å vite hvilken id
@@ -62,19 +62,26 @@ function endreBestilling() {
     submitBtn.html('<i class="fas fa-spinner fa-spin me-2"></i>Lagrer...');
     submitBtn.prop('disabled', true);
 
-    $.post("/endre", bestilling, function(){
-        showAlert("Bestilling oppdatert!", "success");
-        
-        // Redirect etter 1.5 sekunder
-        setTimeout(function() {
-            window.location.href = "/";
-        }, 1500);
-    }).fail(function() {
-        showAlert("Feil ved oppdatering av bestilling!", "danger");
-        
-        // Reset button
-        submitBtn.html(originalText);
-        submitBtn.prop('disabled', false);
+    $.ajax({
+        url: "/api/endre",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(bestilling),
+        success: function(){
+            showAlert("Bestilling oppdatert!", "success");
+            
+            // Redirect etter 1.5 sekunder
+            setTimeout(function() {
+                window.location.href = "/";
+            }, 1500);
+        },
+        error: function() {
+            showAlert("Feil ved oppdatering av bestilling!", "danger");
+            
+            // Reset button
+            submitBtn.html(originalText);
+            submitBtn.prop('disabled', false);
+        }
     });
 }
 
