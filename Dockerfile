@@ -21,8 +21,11 @@ COPY src ./src
 # Build the application
 RUN ./mvnw clean package -DskipTests
 
-# Create data directory for persistent storage
-RUN mkdir -p /app/data
+# Create directories for persistent storage and logs
+RUN mkdir -p /app/data /app/logs
+
+# Set proper permissions
+RUN chmod 755 /app/data /app/logs
 
 # Expose port
 EXPOSE 10000
@@ -30,11 +33,11 @@ EXPOSE 10000
 # Set environment variables
 ENV SPRING_PROFILES_ACTIVE=production
 ENV PORT=10000
-ENV JAVA_OPTS="-Xmx512m -Xms256m"
+ENV JAVA_OPTS="-Xmx512m -Xms256m -Djava.security.egd=file:/dev/./urandom"
 
-# Add health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+# Add health check with longer timeout for Render
+HEALTHCHECK --interval=60s --timeout=30s --start-period=120s --retries=5 \
   CMD curl -f http://localhost:10000/health || exit 1
 
-# Run the application
-CMD ["sh", "-c", "java $JAVA_OPTS -jar target/Oblig3-0.0.1-SNAPSHOT.jar"]
+# Run the application with proper error handling
+CMD ["sh", "-c", "echo 'Starting MovieTickets Application...' && java $JAVA_OPTS -jar target/Oblig3-0.0.1-SNAPSHOT.jar"]
