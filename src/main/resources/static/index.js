@@ -68,7 +68,9 @@ function hentAlle(){
         formaterData(bestillinger);
         updateStats(bestillinger);
     }).fail(function() {
-        showAlert("Feil ved henting av bestillinger!", "danger");
+        // Stille feilhåndtering - bare vis tom liste
+        formaterData([]);
+        updateStats([]);
     });
 }
 
